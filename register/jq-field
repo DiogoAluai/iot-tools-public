@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+# Extract field from json input.
+#
+
+
+# Check arguments
+if [ $# -lt -1 ]; then
+    echo "Usage: $(basename $0) <field name>"
+    exit 1
+fi
+
+
+# Access arguments
+field="$1"
+
+
+jq --argjson index "\"$field\"" '.[$index]'

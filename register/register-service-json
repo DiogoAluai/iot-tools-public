@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+# Register a service on the Registry.
+#
+
+
+# Check arguments
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <service.json>"
+    exit 1
+fi
+
+serviceJson="$1"
+registerServiceEndpoint="register"
+
+# Pretty print result
+curl -s -X POST "$COOL_REGISTRY_URL""$registerServiceEndpoint" -H "Content-Type: application/json" -d @"$serviceJson"
+

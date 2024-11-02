@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+# Deregister service.
+#
+
+
+# Check arguments
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <service name>"
+    exit 1
+fi
+
+# Access arguments
+service="$1"
+deregisterServiceEndpoint="deregister"
+
+curl -s "$COOL_REGISTRY_URL$deregisterServiceEndpoint"/"$service"
+

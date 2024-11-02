@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#
+# Register a service on the Registry.
+# Relies on register-service-json.
+#
+
+tmp_service_json_file=$(mktemp)
+
+
+# -- Check arguments
+if [ $# -ne 6 ]; then
+    echo ""
+    echo "Usage: $0 <name> <private ip> <public ip> <port> <type> <protocol>"
+    echo ""
+    echo "Type can be any of: PRIVATE, PUBLIC or CLOUD" # At the time of writing :)
+    echo "Careful! Beware backend validations!"
+    echo "Careful! Beware escape characters. I can't handle it"
+    exit 1
+fi
+
+# -- Arguments
+name=$1
+privateIp=$2
+publicIp=$3
+port=$4
+type=$5
+protocol=$6
+
+# -- Creating service json file
+{
+  echo "{" ;
+  echo "  \"name\": \"$name\"," ;
+  echo "  \"privateIp\": \"$privateIp\",";
+  echo "  \"publicIp\": \"$publicIp\",";
+  echo "  \"port\": \"$port\",";
+  echo "  \"type\": \"$type\",";
+  echo "  \"protocol\": \"$protocol\"";
+  echo "}";
+} > "$tmp_service_json_file"
+
+# -- Register service
+register-service-json $tmp_service_json_file
+
+# -- Clean up
+#rm "$tmp_service_json_file"
+echo "$tmp_service_json_file"
+

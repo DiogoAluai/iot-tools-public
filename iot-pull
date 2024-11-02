@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#
+# Copy files from iot device to local one through ssh, fetching ip from registry.
+#
+
+
+# Check arguments
+if [ $# -lt 2 ]; then
+    echo "Usage: $(basename $0) <iot device name> <target file/folder>"
+    exit 1
+fi
+
+# Access fields
+iot_name="$1"
+target="$2"
+iot_ip=$(retrieve-service-field "$iot_name" privateIp)
+iot_port=$(retrieve-service-field "$iot_name" port)
+
+if [ -z "$iot_ip" ]; then
+    echo "Could not retrieve ip for $iot_name"
+    exit 1
+else
+    echo "Retrieved ip from registry: $iot_ip"
+fi
+
+# Connection
+scp -r -P "$iot_port" -i ~/.ssh/"$iot_name"_id "$iot_name"@"$iot_ip":/home/"$iot_name"/"$target" .

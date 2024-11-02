@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#
+# Retrieve all services from registry
+#
+
+
+# Endpoint
+retrieve_all_endpoint="retrieveAll"
+
+# Pretty print result
+curl -s "$COOL_REGISTRY_URL""$retrieve_all_endpoint" | jq

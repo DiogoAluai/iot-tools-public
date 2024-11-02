@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#
+# Wrapper to jar execution.
+# Assumes jar is in /usr/bin, and forwards arguments to it.
+#
+
+java -jar /usr/bin/progress-bar.jar "$@"
+

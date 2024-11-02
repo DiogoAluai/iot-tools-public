@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#
+# Retrieve service private ip
+#
+
+
+# Check arguments
+if [ $# -lt 2 ]; then
+    echo "Usage: $(basename $0) <service name> <field>"
+    exit 1
+fi
+
+
+service_name="$1"
+field="$2"
+retrieve_all_endpoint="retrieve/$service_name"
+
+# Pretty print result
+curl -s "$COOL_REGISTRY_URL""$retrieve_all_endpoint" | jq-field "$field" | tr -d "\""
+
+
+
